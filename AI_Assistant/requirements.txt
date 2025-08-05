@@ -1,0 +1,8 @@
+llama-cpp-python>=0.2.57
+whispercpp>=1.2.0
+piper-tts>=1.2.0
+PySide6>=6.6.0
+pyinstaller>=6.0.0
+porcupine>=3.0.0
+fastapi>=0.110.0
+uvicorn>=0.27.0

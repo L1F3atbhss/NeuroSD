@@ -1,0 +1,6 @@
+This is your offline knowledge base.
+Add frequently-asked questions, private docs, or any information you want the assistant to know.
+
+Example:
+Q: What is this project?
+A: This is an offline, cross-platform, SD-card-based AI assistant inspired by Iron Man's JARVIS.
