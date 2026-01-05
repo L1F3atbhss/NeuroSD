@@ -1,0 +1,19 @@
+1. pip install llama-cpp-python
+2. Download an offline model (GGUF)
+3. Place the file here (IN MODELS): AI_Assistant/models/tinyllama-1.1b-chat.Q4_K_M.gguf
+4. Enable the LLM in config
+config/settings.json
+{
+  "assistant_name": "NEURO",
+  "user_name": "Nathan",
+  "tts": true,
+  "use_llm": true,
+  "llm_model": "tinyllama-1.1b-chat.Q4_K_M.gguf",
+  "context_size": 2048
+}
+
+5. Run it!
+
+If everything works, you’ll see:
+[LLM] Offline LLM loaded successfully
+NEURO online.
