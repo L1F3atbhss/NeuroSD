@@ -22,12 +22,16 @@ See project root for layout.
 
 1. **Install dependencies:**  
    `pip install -r requirements.txt`
-2. **Add models to `/models` and voice to `/voices`.**
-3. **Run the assistant:**
+   
+   `pip install llama-cpp-python`
+   
+   ⚠️ On Windows, make sure you’re using Python 3.10–3.12 (64-bit).
+3. **Add models to `/models` and voice to `/voices`.**
+4. **Run the assistant:**
    - Linux: `bash bin/linux_launcher.sh`
    - Windows: Double-click `bin/win_launcher.exe` (build with pyinstaller)
    - macOS: Open `bin/mac_launcher.app` (build with pyinstaller)
-4. **Auto-launch:**
+5. **Auto-launch:**
    - Linux: Install `udev/99-aiassistant.rules` to `/etc/udev/rules.d/`
    - Windows: `autorun.inf` triggers on insert
    - macOS: Install `macos/com.jarvis.aiautostart.plist` to `~/Library/LaunchAgents/`
