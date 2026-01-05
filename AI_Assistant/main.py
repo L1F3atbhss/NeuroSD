@@ -7,34 +7,47 @@ import datetime
 from pathlib import Path
 
 """
-Offline JARVIS AI Assistant (Finished Minimal Version)
-- Fully working CLI
-- Config loading
-- Simple offline brain (rule-based + command system)
-- Optional offline TTS (pyttsx3)
-- Clean project structure
-
-No internet or cloud APIs required.
+Offline JARVIS / NEURO AI Assistant (STABLE FIXED VERSION)
+- No syntax errors
+- No KeyError crashes
+- Safe config loading
+- Optional offline LLM (llama.cpp)
 """
 
-# Config
+# =====================
+# Config (SAFE)
+# =====================
 
 def load_config():
     config_path = Path(__file__).parent / "config" / "settings.json"
+
+    default_config = {
+        "assistant_name": "NEURO",
+        "user_name": "User",
+        "tts": False,
+        "use_llm": False,
+        "llm_model": "tinyllama-1.1b-chat.Q4_K_M.gguf",
+        "context_size": 2048
+    }
+
     if not config_path.exists():
         config_path.parent.mkdir(exist_ok=True)
-        default_config = {
-            "assistant_name": "NEURO",
-            "tts": true,
-            "user_name": "User"
-        }
         with open(config_path, "w") as f:
             json.dump(default_config, f, indent=4)
+        return default_config
+
     with open(config_path, "r") as f:
-        return json.load(f)
+        user_config = json.load(f)
 
+    # Merge defaults to prevent KeyError
+    for k, v in default_config.items():
+        user_config.setdefault(k, v)
 
+    return user_config
+
+# =====================
 # Optional TTS
+# =====================
 
 try:
     import pyttsx3
@@ -43,7 +56,7 @@ except ImportError:
     TTS_AVAILABLE = False
 
 class Speaker:
-    def __init__(self, enabled=True):
+    def __init__(self, enabled=False):
         self.enabled = enabled and TTS_AVAILABLE
         if self.enabled:
             self.engine = pyttsx3.init()
@@ -54,54 +67,90 @@ class Speaker:
             self.engine.say(text)
             self.engine.runAndWait()
 
+# =====================
+# Offline LLM
+# =====================
 
-# Brain (Offline Logic)
+USE_LLM = False
+LLM = None
 
+def load_llm(config):
+    global USE_LLM, LLM
+
+    if not config.get("use_llm"):
+        return
+
+    try:
+        from llama_cpp import Llama
+        model_path = Path(__file__).parent / "models" / config["llm_model"]
+
+        if not model_path.exists():
+            print("[LLM] Model not found:", model_path)
+            return
+
+        LLM = Llama(
+            model_path=str(model_path),
+            n_ctx=config.get("context_size", 2048),
+            n_threads=os.cpu_count()
+        )
+        USE_LLM = True
+        print("[LLM] Offline model loaded")
+
+    except ImportError:
+        print("[LLM] llama-cpp-python not installed")
+
+# =====================
+# Brain
+# =====================
 
 def generate_response(text, config):
-    text = text.lower().strip()
+    text = text.strip()
 
-    if text in ["hi", "hello", "hey"]:
-        return f"Hello {config['user_name']}. How can I assist you?"
-
-    if "time" in text:
-        return f"The current time is {datetime.datetime.now().strftime('%H:%M:%S')}"
-
-    if "date" in text:
-        return f"Today's date is {datetime.date.today().isoformat()}"
-
-    if "os" in text or "system" in text:
-        return f"You are running {platform.system()} {platform.release()}"
-
-    if "your name" in text:
-        return f"My name is {config['assistant_name']}. Offline and operational."
-
-    if "help" in text:
-        return (
-            "Available commands:\n"
-            "- time\n"
-            "- date\n"
-            "- system info\n"
-            "- your name\n"
-            "- exit"
+    # ---- LLM ----
+    if USE_LLM and LLM:
+        prompt = (
+            f"You are an offline AI assistant named {config['assistant_name']}.\n"
+            f"User: {text}\nAssistant:"
         )
+        result = LLM(prompt, max_tokens=256, stop=["User:"])
+        return result["choices"][0]["text"].strip()
 
-    return "I am currently running offline logic. Command not recognized. Try 'help'."
+    # ---- Rules ----
+    lower = text.lower()
 
-# CLI Mode
+    if lower in ["hi", "hello", "hey"]:
+        return f"Hello {config['user_name']}. How can I help?"
+
+    if "time" in lower:
+        return datetime.datetime.now().strftime("%H:%M:%S")
+
+    if "date" in lower:
+        return datetime.date.today().isoformat()
+
+    if "system" in lower or "os" in lower:
+        return f"{platform.system()} {platform.release()}"
+
+    if "your name" in lower:
+        return f"My name is {config['assistant_name']}"
+
+    if "help" in lower:
+        return "Commands: time, date, system, your name, exit"
+
+    return "Offline mode active. Enable LLM for free chat."
+
+# =====================
+# CLI
+# =====================
 
 def run_cli(config):
     speaker = Speaker(enabled=config.get("tts", False))
-
-    print("=== Offline JARVIS AI Assistant (CLI Mode) ===")
-    print("Type 'exit' or press Ctrl+C to quit. Type 'help' for commands.\n")
 
     speaker.say(f"{config['assistant_name']} online.")
 
     while True:
         try:
             user_input = input("You: ")
-            if user_input.lower().strip() in ["exit", "quit"]:
+            if user_input.lower() in ["exit", "quit"]:
                 speaker.say("Goodbye.")
                 break
 
@@ -112,27 +161,18 @@ def run_cli(config):
             speaker.say("Shutting down.")
             break
 
-
-# GUI Stub
-
-def run_gui():
-    print("GUI mode coming soon (PySide6). Use --cli for now.")
-
-
-# Entry Point
+# =====================
+# Main
+# =====================
 
 def main():
-    parser = argparse.ArgumentParser(description="Offline JARVIS AI Assistant")
-    parser.add_argument("--cli", action="store_true", help="Run in CLI mode")
-    parser.add_argument("--gui", action="store_true", help="Run in GUI mode")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--cli", action="store_true")
     args = parser.parse_args()
 
     config = load_config()
-
-    if args.gui:
-        run_gui()
-    else:
-        run_cli(config)
+    load_llm(config)
+    run_cli(config)
 
 if __name__ == "__main__":
     main()
