@@ -26,7 +26,8 @@ def load_config():
         "user_name": "User",
         "tts": False,
         "use_llm": False,
-        "llm_model": "tinyllama-1.1b-chat.Q4_K_M.gguf",
+        "llm_model": "tinyllama-1.1b-chat-v1.0-q4_k_m.gguf",
+        "model": "tinyllama-1.1b-chat-v1.0-q4_k_m.gguf",
         "context_size": 2048
     }
 
@@ -134,6 +135,9 @@ def generate_response(text, config):
         return f"My name is {config['assistant_name']}"
 
     if "help" in lower:
+        return "Commands: time, date, system, your name, exit"
+    
+    if "what can you do?" in lower:
         return "Commands: time, date, system, your name, exit"
 
     return "Offline mode active. Enable LLM for free chat."
