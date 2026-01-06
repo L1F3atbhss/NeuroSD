@@ -11,9 +11,9 @@ It runs entirely locally from an SD card on **Linux, Windows, and macOS** — no
 
 - Fully offline local LLM (GGUF via `llama.cpp`)
 - Speech-to-text (Whisper.cpp – optional)
-- Text-to-speech (Piper / Coqui / pyttsx3)
-- Wake word detection (Porcupine / Whisper – optional)
-- CLI (stable) & GUI (PySide6 – optional)
+- Text-to-speech (pyttsx3)
+- Wake word detection (Whisper – optional)
+- CLI (stable) & GUI (PySide6)
 - Offline knowledge base (RAG-ready)
 - Auto-launch on SD card insertion
 
