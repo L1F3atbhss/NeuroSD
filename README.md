@@ -76,8 +76,11 @@ models/
 Enable in config/settings.json:
 ```
 {
+  "assistant_name": "NEURO",
+  "user_name": "User",
+  "tts": false,
   "use_llm": true,
-  "llm_model": "tinyllama-1.1b-chat-v1.0-q4_k_m.gguf",
+  "model": "tinyllama-1.1b-chat-v1.0-q4_k_m.gguf",
   "context_size": 2048
 }
 ```
