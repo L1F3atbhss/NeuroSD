@@ -118,7 +118,8 @@ MacOS:
 pyinstaller --onefile bin/mac_launcher.py --name mac_launcher.app
 ```
 ---
-#Extending NeuroSD
+# Extending NeuroSD
+
 	•	rag/rag.py – Offline retrieval (RAG)
 	•	wakeword/wakeword.py – Wake word detection
 	•	GUI logic with PySide6
