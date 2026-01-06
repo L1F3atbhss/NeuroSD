@@ -91,7 +91,7 @@ Setup & Run
 	3.	Run the assistant
 
 ---
-#Auto-Launch on SD Card Insert
+# Auto-Launch on SD Card Insert
 
 Linux:
 ```Bash
