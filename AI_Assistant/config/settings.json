@@ -1,11 +1,8 @@
 {
-    "model": "llama3-8b-q4_k_m.bin",
-    "stt_model": "whisper-small.bin",
-    "tts_voice": "jarvis_voice.pth",
-    "fast_mode_model": "gemma-2b-q4.bin",
-    "wake_word": "jarvis",
-    "response_latency": 3,
-    "listen_timeout": 10,
-    "voice_output": true,
-    "conversation_history": true
+  "assistant_name": "NEURO",
+  "user_name": "User",
+  "tts": false,
+  "use_llm": true,
+  "model": "llm_model",
+  "context_size": 2048
 }
