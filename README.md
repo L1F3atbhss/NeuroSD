@@ -54,16 +54,16 @@ Download GGUF models and place them in the /models folder.
 
 TinyLLaMA (Fast, low RAM – recommended starter)
 
-	•	tinyllama-1.1b-chat.Q4_K_M.gguf
-	•	https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-GGUF
+`tinyllama-1.1b-chat.Q4_K_M.gguf`
+
 
 LLaMA 3 (Higher quality, more RAM required)
 
-	•	https://huggingface.co/TheBloke/Meta-Llama-3-8B-GGUF
+`https://huggingface.co/TheBloke/Meta-Llama-3-8B-GGUF`
 
 Gemma
 
-	•	https://huggingface.co/TheBloke/Gemma-GGUF
+`https://huggingface.co/TheBloke/Gemma-GGUF`
 
 Example:
 ```
