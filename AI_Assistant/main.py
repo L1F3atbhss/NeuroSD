@@ -7,9 +7,7 @@ import datetime
 from pathlib import Path
 
 """
-Offline JARVIS / NEURO AI Assistant (STABLE FIXED VERSION)
-- No syntax errors
-- No KeyError crashes
+NEURO AI Assistant (Offline JARVIS)
 - Safe config loading
 - Optional offline LLM (llama.cpp)
 """
