@@ -3,7 +3,7 @@
 ## Overview
 
 **NeuroSD** is a fully offline, cross-platform, voice-enabled personal AI inspired by Iron Man’s JARVIS.  
-It runs entirely locally from an SD card on **Linux, Windows, and macOS** — no internet required.
+It could run entirely locally from an SD card or on your personal computer. No internet required. Supported on **Linux, Windows, and macOS**.
 
 ---
 
