@@ -40,7 +40,7 @@ Python
 pip install -r requirements.txt
 pip install llama-cpp-python
 ```
-Optional (voice support):
+Voice support:
 ```
 pip install pyttsx3
 ```
@@ -54,28 +54,24 @@ Download GGUF models and place them in the /models folder.
 
 TinyLLaMA (Fast, low RAM – recommended starter)
 
-`tinyllama-1.1b-chat.Q4_K_M.gguf`
+`tinyllama-1.1b-chat-v1.0-q4_k_m.gguf`
 
 
 LLaMA 3 (Higher quality, more RAM required)
 
 `https://huggingface.co/TheBloke/Meta-Llama-3-8B-GGUF`
 
-Gemma
-
-`https://huggingface.co/TheBloke/Gemma-GGUF`
-
-Example:
+## Example:
 ```
 models/
-└── tinyllama-1.1b-chat.Q4_K_M.gguf
+└── tinyllama-1.1b-chat-v1.0-q4_k_m.gguf
 ```
 
 Enable in config/settings.json:
 ```
 {
   "use_llm": true,
-  "llm_model": "tinyllama-1.1b-chat.Q4_K_M.gguf",
+  "llm_model": "tinyllama-1.1b-chat-v1.0-q4_k_m.gguf",
   "context_size": 2048
 }
 ```
@@ -99,7 +95,7 @@ Uses autorun.inf
 MacOS:
 
 ```
-macos/com.jarvis.aiautostart.plist
+macos/com.NERUO.aiautostart.plist
 ```
 To:
 ```
@@ -118,10 +114,10 @@ MacOS:
 pyinstaller --onefile bin/mac_launcher.py --name mac_launcher.app
 ```
 ---
-# Extending NeuroSD
+# Next Steps for the NeuroSD project
 
-	•	rag/rag.py – Offline retrieval (RAG)
-	•	wakeword/wakeword.py – Wake word detection
-	•	GUI logic with PySide6
-	•	Swap GGUF models freely
-	•	Add new voices under /voices
+- rag/rag.py – Offline retrieval (RAG)
+- wakeword/wakeword.py – Wake word detection
+- GUI logic with PySide6
+- Swap GGUF models freely
+- Add new voices under /voices
