@@ -2,52 +2,122 @@
 
 ## Overview
 
-A fully offline, cross-platform, voice-enabled personal AI, inspired by Iron Man's JARVIS, running from an SD card on Linux, Windows, and macOS.
-
-## Features
-
-- Local LLM (LLaMA 3, Gemma, etc.)
-- Whisper.cpp for speech-to-text
-- Coqui/Piper TTS for voice
-- Wake word detection (Porcupine/Whisper)
-- CLI & GUI (PySide6)
-- Retrieval from offline knowledge base (RAG)
-- Auto-launch on SD insertion
-
-## Folder Structure
-
-See project root for layout.
-
-## Setup
-
-1. **Install dependencies:**  
-   `pip install -r requirements.txt`
-   
-   `pip install llama-cpp-python`
-   
-   ⚠️ On Windows, make sure you’re using Python 3.10–3.12 (64-bit).
-3. **Add models to `/models` and voice to `/voices`.**
-4. **Run the assistant:**
-   - Linux: `bash bin/linux_launcher.sh`
-   - Windows: Double-click `bin/win_launcher.exe` (build with pyinstaller)
-   - macOS: Open `bin/mac_launcher.app` (build with pyinstaller)
-5. **Auto-launch:**
-   - Linux: Install `udev/99-aiassistant.rules` to `/etc/udev/rules.d/`
-   - Windows: `autorun.inf` triggers on insert
-   - macOS: Install `macos/com.jarvis.aiautostart.plist` to `~/Library/LaunchAgents/`
-
-## Building Launchers
-
-- **Windows:**  
-  `pyinstaller --onefile bin/win_launcher.py --name win_launcher.exe`
-- **macOS:**  
-  `pyinstaller --onefile bin/mac_launcher.py --name mac_launcher.app`
-
-## Extending
-
-- Fill in `rag/rag.py`, `wakeword/wakeword.py`, and GUI logic.
-- Integrate LLaMA.cpp, Whisper.cpp, Piper/Coqui TTS as needed.
+**NeuroSD** is a fully offline, cross-platform, voice-enabled personal AI inspired by Iron Man’s JARVIS.  
+It runs entirely locally from an SD card on **Linux, Windows, and macOS** — no internet required.
 
 ---
 
-**Enjoy your portable, offline JARVIS!**
+## Features
+
+- Fully offline local LLM (GGUF via `llama.cpp`)
+- Speech-to-text (Whisper.cpp – optional)
+- Text-to-speech (Piper / Coqui / pyttsx3)
+- Wake word detection (Porcupine / Whisper – optional)
+- CLI (stable) & GUI (PySide6 – optional)
+- Offline knowledge base (RAG-ready)
+- Auto-launch on SD card insertion
+
+---
+
+## Folder Structure
+
+```text
+models/        # LLM GGUF files
+voices/        # TTS voice models
+config/        # settings.json
+AI_Assistant/  # Core assistant logic
+```
+---
+#Requirements
+
+Python
+	•	Python 3.10 – 3.12 (64-bit required)
+	•	Windows: ensure Python is added to PATH
+
+#Core Dependencies
+
+```Bash
+pip install -r requirements.txt
+pip install llama-cpp-python
+```
+Optional (voice support):
+```
+pip install pyttsx3
+```
+---
+#Downloading an Offline LLM (GGUF)
+
+Download GGUF models and place them in the /models folder.
+
+##Recommended Models
+
+TinyLLaMA (Fast, low RAM – recommended starter)
+	•	tinyllama-1.1b-chat.Q4_K_M.gguf
+	•	https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-GGUF
+
+LLaMA 3 (Higher quality, more RAM required)
+	•	https://huggingface.co/TheBloke/Meta-Llama-3-8B-GGUF
+
+Gemma
+	•	https://huggingface.co/TheBloke/Gemma-GGUF
+
+Example:
+```
+models/
+└── tinyllama-1.1b-chat.Q4_K_M.gguf
+```
+
+Enable in config/settings.json:
+```
+{
+  "use_llm": true,
+  "llm_model": "tinyllama-1.1b-chat.Q4_K_M.gguf",
+  "context_size": 2048
+}
+```
+---
+Setup & Run
+	1.	Install dependencies
+	2.	Add LLM models to /models
+	3.	Run the assistant
+
+---
+#Auto-Launch on SD Card Insert
+
+Linux:
+```Bash
+sudo cp udev/99-aiassistant.rules /etc/udev/rules.d/
+```
+
+Windows:
+Uses autorun.inf
+
+MacOS:
+
+```
+macos/com.jarvis.aiautostart.plist
+```
+To:
+```
+~/Library/LaunchAgents/
+```
+---
+
+#Building Launchers:
+Windows:
+```
+pyinstaller --onefile bin/win_launcher.py --name win_launcher.exe
+```
+
+MacOS:
+```
+pyinstaller --onefile bin/mac_launcher.py --name mac_launcher.app
+```
+---
+#Extending NeuroSD
+	•	rag/rag.py – Offline retrieval (RAG)
+	•	wakeword/wakeword.py – Wake word detection
+	•	GUI logic with PySide6
+	•	Swap GGUF models freely
+	•	Add new voices under /voices
+67
