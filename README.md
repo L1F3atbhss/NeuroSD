@@ -41,7 +41,8 @@ pip install -r requirements.txt
 pip install llama-cpp-python
 ```
 
-```llama-cpp-python docs
+llama-cpp-python docs:
+```
 https://huggingface.co/docs/hub/en/gguf-llamacpp
 ```
 
