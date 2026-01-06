@@ -28,13 +28,13 @@ config/        # settings.json
 AI_Assistant/  # Core assistant logic
 ```
 ---
-#Requirements
+# Requirements
 
 Python
 	•	Python 3.10 – 3.12 (64-bit required)
 	•	Windows: ensure Python is added to PATH
 
-#Core Dependencies
+# Core Dependencies
 
 ```Bash
 pip install -r requirements.txt
@@ -46,11 +46,11 @@ pip install pyttsx3
 ```
 ---
 
-#Downloading an Offline LLM (GGUF)
+# Downloading an Offline LLM (GGUF)
 
 Download GGUF models and place them in the /models folder.
 
-##Recommended Models
+## Recommended Models
 
 TinyLLaMA (Fast, low RAM – recommended starter)
 
@@ -124,4 +124,3 @@ pyinstaller --onefile bin/mac_launcher.py --name mac_launcher.app
 	•	GUI logic with PySide6
 	•	Swap GGUF models freely
 	•	Add new voices under /voices
-67
