@@ -76,15 +76,17 @@ LLM = None
 def load_llm(config):
     global USE_LLM, LLM
 
+
     if not config.get("use_llm"):
         return
-
+    
     try:
         from llama_cpp import Llama
         model_path = Path(__file__).parent / "models" / config["llm_model"]
 
         if not model_path.exists():
             print("[LLM] Model not found:", model_path)
+            USE_LLM = False
             return
 
         LLM = Llama(
@@ -99,7 +101,7 @@ def load_llm(config):
         print("[LLM] llama-cpp-python not installed")
 
 # =====================
-# Brain
+# NERUO Response Generation
 # =====================
 
 def generate_response(text, config):
@@ -117,7 +119,7 @@ def generate_response(text, config):
     # ---- Rules ----
     lower = text.lower()
 
-    if lower in ["hi", "hello", "hey"]:
+    if lower in ["hi", "hello", "hey", "greetings"]:
         return f"Hello {config['user_name']}. How can I help?"
 
     if "time" in lower:
@@ -132,7 +134,7 @@ def generate_response(text, config):
     if "your name" in lower:
         return f"My name is {config['assistant_name']}"
 
-    if "help" in lower:
+    if lower in ["help", "commands", "-h", "--help", "/help", "/commands", "what are your commands?", "list commands", "show commands", "what can you do"]:
         return "Commands: time, date, system, your name, exit"
     
     if "what can you do?" in lower:
@@ -147,7 +149,10 @@ def generate_response(text, config):
 def run_cli(config):
     speaker = Speaker(enabled=config.get("tts", False))
 
-    speaker.say(f"{config['assistant_name']} online.")
+    llm_status = USE_LLM
+
+    speaker.say(f"{config['assistant_name']}" + "Status: READY")
+    print("LLM Status:" + str(llm_status))
 
     while True:
         try:

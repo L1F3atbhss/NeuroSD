@@ -123,7 +123,7 @@ MacOS:
 pyinstaller --onefile bin/mac_launcher.py --name mac_launcher.app
 ```
 ---
-# Next Steps for the NeuroSD project
+## Next Steps for the NeuroSD project
 
 - rag/rag.py – Offline retrieval (RAG)
 - wakeword/wakeword.py – Wake word detection
